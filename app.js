@@ -1,15 +1,16 @@
 const express = require("express");
 const app = express();
+let inputNumber = "";
 
 app.use(express.urlencoded());
 app.set('view engine', 'pug');
 app.set('views', 'views');
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {inputNumber});
 });
 
 app.post("/", (req, res) => {
-  let inputNumber = req.body.number;  
+  inputNumber = req.body.number;  
   res.render('index', {inputNumber});  
 });
 
