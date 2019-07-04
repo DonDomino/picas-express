@@ -4,5 +4,7 @@ html
   body
     h1 Picas y Fijas Express
     h3 Ingresa cuatro digitos diferentes y oprime Enter
-    form(action="/", method="post") 
-      input(type="text" name="number" value=`${inputNumber}`)
+    form(action="/", method="post")
+      input(type="text" id="number" name="number")
+      p Ingresaste #{inputNumber}
+      h4 Tienes #{compare[0]} Picas y #{compare[1]} Fijas
