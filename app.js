@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cookieSession = require('cookie-session');
 
 const generateNumber = () => {
   const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
@@ -24,22 +25,25 @@ const setValues = (random, userNum) => {
   return [picas, fijas];
 }
 
-let inputNumber = "";
-let toGuess = generateNumber();
-let compare = [0,0];
-console.log(toGuess);
-
-app.use(express.urlencoded());
 app.set('view engine', 'pug');
 app.set('views', 'views');
+app.use(express.urlencoded());
+app.use(cookieSession({
+  secret: 'barranquilla inmortal',
+  maxAge:  3* 60 * 1000,
+}));
+
 app.get("/", (req, res) => {
-  res.render("index", {compare});
+  req.session.random = generateNumber();
+  console.log(req.session.random);
+  res.render("index");
 });
 
 app.post("/", (req, res) => {
-  inputNumber = req.body.number;  
-  compare = setValues(toGuess, inputNumber);
-  res.render('index', {inputNumber, compare});  
+  let inputNumber = req.body.number;  
+  req.session.compare = setValues(req.session.random, inputNumber);
+  let result = req.session.compare;
+  res.render('index', {inputNumber, result});  
 });
 
 app.listen(3000, () => console.log('Listening on port 3000!'));

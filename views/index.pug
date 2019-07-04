@@ -6,5 +6,6 @@ html
     h3 Ingresa cuatro digitos diferentes y oprime Enter
     form(action="/", method="post")
       input(type="text" id="number" name="number")
-      p Ingresaste #{inputNumber}
-      h4 Tienes #{compare[0]} Picas y #{compare[1]} Fijas
+      if result
+        p Ingresaste #{inputNumber}      
+          h4 Tienes #{result[0]} Picas y #{result[1]} Fijas
